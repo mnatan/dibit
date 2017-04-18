@@ -1,0 +1,12 @@
+type Post {
+    id: Int,
+    test: String,
+}
+
+type DibitRoot {
+    test: Post
+}
+
+schema {
+    query: DibitRoot
+}

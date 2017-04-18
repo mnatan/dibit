@@ -1,0 +1,29 @@
+{
+  "name": "dibit",
+  "version": "1.0.0",
+  "description": "Dibit backend and frontend project",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo test",
+    "watch": "node ./node_modules/gulp/bin/gulp.js build-watch"
+  },
+  "author": "Marcin Natanek",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "6.x.x",
+    "babel-preset-node6": "11.x.x",
+    "body-parser": "1.x.x",
+    "express": "4.x.x",
+    "fs": "*",
+    "graphql": "*",
+    "graphql-server-express": "*",
+    "graphql-tools": "*",
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-concat": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-watch": "*",
+    "nodemon": "*",
+    "path": "*"
+  }
+}
