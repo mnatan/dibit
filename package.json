@@ -14,7 +14,6 @@
     "babel-preset-node6": "11.x.x",
     "body-parser": "1.x.x",
     "express": "4.x.x",
-    "fs": "*",
     "graphql": "*",
     "graphql-server-express": "*",
     "graphql-tools": "*",

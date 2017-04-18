@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import {graphiqlExpress, graphqlExpress} from "graphql-server-express";
 
-import schema from "./rootSchema";
+import {schema} from "./rootSchema";
 
 
 const app = express();
