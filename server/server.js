@@ -2,8 +2,23 @@ import express from "express";
 import bodyParser from "body-parser";
 import {graphiqlExpress, graphqlExpress} from "graphql-server-express";
 
+import Client from "./models/Client";
 import {schema} from "./rootSchema";
 
+Client
+    .sync()
+    .then(() => {
+        Client
+            .build({
+                title: 'test',
+                description: 'test',
+                deadline: new Date()
+            })
+            .save()
+            .then(client => {
+                console.log(client)
+            });
+    });
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
