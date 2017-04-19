@@ -8,9 +8,7 @@ gulp.task('babel-server', () => {
     gulp.src('server/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel({
-            "presets": [["env", {
-                "targets": {"node": "current"}
-            }]]
+            "presets": ['node6-es6']
         }))
         .on('error', console.error.bind(console))
         .pipe(sourcemaps.write('.'))

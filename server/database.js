@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import * as config from "./config.json";
 
-let sequelize = new Sequelize(
+let dibitDB = new Sequelize(
     config.dibit_db.database,
     config.dibit_db.user,
     config.dibit_db.password,
@@ -12,4 +12,4 @@ let sequelize = new Sequelize(
     }
 );
 
-export default sequelize;
+export default dibitDB;
