@@ -22,28 +22,57 @@ beforeEach(async () => {
 
 describe('gql schema', () => {
     const qry = `{
-                  places {
-                    id
-                    place_name
-                    network
-                    tables {
-                      id
-                      name
-                    }
-                  }
-                }`;
+  places {
+    id
+    tables {
+      id
+      name
+    }
+  }
+}`;
 
     let expected = {
         "data": {
             "places": [
                 {
                     "id": 1,
-                    "place_name": null,
-                    "network": "test",
                     "tables": [
                         {
                             "id": 1,
-                            "name": "test table"
+                            "name": "test table 1, 1"
+                        },
+                        {
+                            "id": 2,
+                            "name": "test table 1, 2"
+                        },
+                        {
+                            "id": 3,
+                            "name": "test table 1, 3"
+                        },
+                        {
+                            "id": 4,
+                            "name": "test table 1, 4"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "tables": [
+                        {
+                            "id": 5,
+                            "name": "test table 2, 1"
+                        },
+                        {
+                            "id": 6,
+                            "name": "test table 2, 2"
+                        },
+                        {
+                            "id": 7,
+                            "name": "test table 2, 3"
+                        },
+                        {
+                            "id": 8,
+                            "name": "test table 2, 4"
                         }
                     ]
                 }

@@ -2,6 +2,7 @@ import Sequelize from "sequelize";
 import dibitDB from "../database";
 import {attributeFields} from "graphql-sequelize";
 import {GraphQLObjectType} from "graphql";
+import Place from "./Place";
 
 let Model = dibitDB.define('network', {
     name: {
@@ -12,6 +13,7 @@ let Model = dibitDB.define('network', {
     },
     description: Sequelize.TEXT,
 });
+Place.Model.belongsTo(Model, {allowNull: false});
 
 let Type = new GraphQLObjectType({
     name: 'Network',
@@ -26,6 +28,6 @@ module.exports = {
         Model.findOrCreate({
             where: {name: `test`},
             defaults: {description: 'for test purposes'}
-        }).spread((nt, cre) =>  nt )
+        }).spread((nt, cre) => nt)
     ])
 };

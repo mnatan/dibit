@@ -1,21 +1,15 @@
 import * as _ from "lodash";
 import Sequelize from "sequelize";
 import dibitDB from "../database";
-import Network from "./Network";
 import Table from "./Table";
 import {GraphQLList, GraphQLObjectType} from "graphql";
-import {attributeFields, resolver} from "graphql-sequelize";
+import {attributeFields} from "graphql-sequelize";
 
 let Model = dibitDB.define('place', {
-    place_name: Sequelize.STRING,
+    name: Sequelize.STRING,
     description: Sequelize.TEXT,
 });
-Model.belongsTo(Network.Model, {
-    as: 'name',
-    foreignKey: 'network',
-    allowNull: false
-});
-Model.hasMany(Table.Model, {as: "tables"});
+Table.Model.belongsTo(Model, {allowNull: false});
 
 let Type = new GraphQLObjectType({
     name: 'Place',
@@ -24,7 +18,9 @@ let Type = new GraphQLObjectType({
         ...attributeFields(Model),
         tables: {
             type: new GraphQLList(Table.Type),
-            resolve: resolver(Table.Model)
+            resolve: place => Table.Model
+                .findAll({where: {placeId: place.id}})
+                .then(tbl => tbl.map(tb => tb.get()))
         }
     }
 });
@@ -36,10 +32,9 @@ module.exports = {
         networks.map(nt => Promise.all(
             [1, 2].map(no =>
                 Model.create({
-                    place_name: `test place ${no}`,
+                    name: `test place ${no}`,
                     description: 'place for test purposes',
-                    network: nt.name
+                    networkName: nt.name
                 })
-            ))))
-        .then(_.flatten)
+            )))).then(_.flatten)
 };
