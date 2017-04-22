@@ -4,6 +4,7 @@ import {schema} from "./schema";
 
 
 const app = express();
+
 app.set('port', process.env.PORT || 3000);
 app.use('/static', express.static('public'));
 
@@ -14,4 +15,6 @@ app.use('/api/v1', graphqlHTTP({
 
 app.listen(app.get('port'));
 
-console.log('Initialized');
+console.log('Initialized'); // TODO morgan
+
+export default app;

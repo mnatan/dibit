@@ -7,9 +7,7 @@ const watch = require('gulp-watch');
 gulp.task('babel-server', () => {
     gulp.src('server/**/*.js')
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            "presets": ['node6-es6']
-        }))
+        .pipe(babel())
         .on('error', console.error.bind(console))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist'));
