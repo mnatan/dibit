@@ -12,6 +12,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "6.x.x",
+    "babel-plugin-source-map-support": "0.0.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "1.x.x",
@@ -32,6 +33,7 @@
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.30.4",
+    "source-map-support": "^0.4.14",
     "supertest": "^3.0.0",
     "winston": "^2.3.1"
   }

@@ -8,15 +8,16 @@ gulp.task('babel-server', () => {
     gulp.src('server/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel())
-        .on('error', console.error.bind(console))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist'));
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('dist'))
+        .on('error', console.error.bind(console));
 });
 gulp.task('copy-schemas', () => {
     gulp.src([
-        'server/**/*.graphqls',
-        'server/**/*.json',
-    ]).pipe(gulp.dest('dist/'))
+        'graphqls',
+        'json',
+    ].map(ext => `server/**/*.${ext}`))
+        .pipe(gulp.dest('dist/'))
 });
 
 gulp.task('build', ['babel-server', 'copy-schemas']);

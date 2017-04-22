@@ -1,5 +1,6 @@
 import Sequelize from "sequelize";
 import * as config from "./config.json";
+import * as logger from "./logging"
 
 let dibitDB = new Sequelize(
     config.dibit_db.database,
@@ -8,7 +9,8 @@ let dibitDB = new Sequelize(
     {
         host: config.dibit_db.host,
         port: config.dibit_db.port,
-        dialect: 'postgres'
+        dialect: 'postgres',
+        logging: logger.info
     }
 );
 

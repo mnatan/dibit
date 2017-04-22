@@ -1,6 +1,7 @@
 import winston from "winston";
 winston.emitErrs = true;
 
+
 let logger = new winston.Logger({
     transports: [
         new winston.transports.Console({
@@ -8,7 +9,7 @@ let logger = new winston.Logger({
             handleExceptions: true,
             humanReadableUnhandledException: true,
             json: false,
-            colorize: true
+            colorize: true,
         })
     ],
     exitOnError: false
