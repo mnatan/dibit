@@ -10,23 +10,10 @@ import * as Place from "../models/Place";
 import * as Table from "../models/Table";
 
 async function populate_db() {
-    await dibsdb.sync({force: true}).then(() => {
-        return Network.Model
-            .findOrCreate({where: {name: 'test'}, defaults: {description: 'for test purposes'}})
-            .spread(function (nt, created) {
-                return nt
-            })
-    }).then(nt => {
-        return Place.Model.create({
-            name: 'test place',
-            description: 'for test purposes',
-            network: nt.name
-        });
-    }).then(pl => {
-        return Table.Model.create({name: 'test table', placeId: pl.id});
-    }).then(tb => {
-        return tb
-    });
+    await dibsdb.sync({force: true})
+        .then(Network.test)
+        .then(Place.test)
+        .then(Table.test);
 }
 
 beforeEach(async () => {

@@ -2,7 +2,6 @@ import Sequelize from "sequelize";
 import dibitDB from "../database";
 import {GraphQLObjectType} from "graphql";
 import {attributeFields} from "graphql-sequelize";
-import Place from "./Place";
 
 let Model = dibitDB.define('table', {
     name: Sequelize.STRING,
@@ -17,5 +16,9 @@ let Type = new GraphQLObjectType({
 
 module.exports = {
     Model,
-    Type
+    Type,
+    test: place => Model.create({
+        name: 'test table',
+        placeId: place.id
+    })
 };

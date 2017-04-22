@@ -21,5 +21,13 @@ let Type = new GraphQLObjectType({
 
 module.exports = {
     Model,
-    Type
+    Type,
+    test: () => Model
+        .findOrCreate({
+            where: {name: 'test'},
+            defaults: {description: 'for test purposes'}
+        })
+        .spread(function (nt, created) {
+            return nt
+        })
 };

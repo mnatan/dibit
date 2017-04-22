@@ -29,5 +29,10 @@ let Type = new GraphQLObjectType({
 
 module.exports = {
     Model,
-    Type
+    Type,
+    test: (network) => Model.create({
+        name: 'test place',
+        description: 'for test purposes',
+        network: network.name
+    })
 };
