@@ -13,7 +13,7 @@ async function populate_db() {
     await dibsdb.sync({force: true})
         .then(Network.test)
         .then(Place.test)
-        .then(Table.test);
+        .then(Table.test)
 }
 
 beforeEach(async () => {

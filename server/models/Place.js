@@ -11,7 +11,8 @@ let Model = dibitDB.define('place', {
 });
 Model.belongsTo(Network.Model, {
     as: 'name',
-    foreignKey: 'network'
+    foreignKey: 'network',
+    allowNull: false
 });
 Model.hasMany(Table.Model, {as: "tables"});
 
@@ -30,7 +31,7 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: (network) => Model.create({
+    test: network => Model.create({
         name: 'test place',
         description: 'for test purposes',
         network: network.name
