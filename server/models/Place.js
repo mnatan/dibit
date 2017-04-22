@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import Sequelize from "sequelize";
 import dibitDB from "../database";
 import Network from "./Network";
@@ -31,9 +32,14 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: network => Model.create({
-        name: 'test place',
-        description: 'for test purposes',
-        network: network.name
-    })
+    test: networks => Promise.all(
+        networks.map(nt => Promise.all(
+            [1, 2].map(no =>
+                Model.create({
+                    place_name: `test place ${no}`,
+                    description: 'place for test purposes',
+                    network: nt.name
+                })
+            ))))
+        .then(_.flatten)
 };

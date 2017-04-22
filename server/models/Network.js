@@ -22,8 +22,10 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: () => Model.findOrCreate({
-        where: {name: 'test'},
-        defaults: {description: 'for test purposes'}
-    }).spread(nt => nt)
+    test: () => Promise.all([
+        Model.findOrCreate({
+            where: {name: `test`},
+            defaults: {description: 'for test purposes'}
+        }).spread((nt, cre) =>  nt )
+    ])
 };

@@ -17,8 +17,12 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: place => Model.create({
-        name: 'test table',
-        placeId: place.id
-    })
+    test: places => Promise.all(
+        places.map(pl =>
+            [1, 2, 3, 4].map(no => {
+                Model.create({
+                    name: `test table ${pl.id}, ${no}`,
+                    placeId: pl.id
+                })
+            })))
 };
