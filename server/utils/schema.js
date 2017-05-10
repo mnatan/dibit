@@ -20,7 +20,8 @@ exports.schema = new GraphQLSchema({
             generateToken: {
                 type: GraphQLString,
                 description: 'Used to authenticate the user',
-                resolve: generateToken
+                resolve: generateToken,
+                deprecationReason: 'Unused, auth via http'
             }
         }
     })

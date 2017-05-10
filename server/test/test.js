@@ -48,3 +48,25 @@ describe('gql schema', () => {
             });
     });
 });
+
+describe('auth', () => {
+    it('basic login', async () => {
+        let login = await request(app)
+            .post('/login')
+            .send({
+                user: 'mnatan',
+                password: 'test'
+            })
+            .expect(200);
+
+        expect(login.body.message).to.equal('ok');
+        expect(login.body).to.have.property('token');
+
+        let secret = await request(app)
+            .get('/secret')
+            .set('Authorization', 'JWT ' + login.body.token)
+            .expect(200);
+
+        expect(secret.body.message).to.equal('Success!');
+    });
+});
