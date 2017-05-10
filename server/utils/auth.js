@@ -42,20 +42,20 @@ module.exports = {
 
         return passport
     },
-    authenticateUser: function (req, res) {
-        var name = req.body.user;
-        var password = req.body.password;
+    authenticateUser: function (req, res) { // FIXME
+        const name = req.body.user;
+        const password = req.body.password;
 
         // usually this would be a database call:
-        var user = _.find(users, {name: name});
+        const user = _.find(users, {name: name});
         if (!user) {
             res.status(401).json({message: "no such user found"});
         }
 
         if (user.password === req.body.password) {
             // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-            var payload = {id: user.id};
-            var token = jwt.sign(payload, jwtOptions.secretOrKey);
+            const payload = {id: user.id};
+            const token = jwt.sign(payload, jwtOptions.secretOrKey);
             res.json({message: "ok", token: token});
         } else {
             res.status(401).json({message: "passwords did not match"});

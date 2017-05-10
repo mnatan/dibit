@@ -11,16 +11,14 @@ const app = express();
 
 app.use(morgan('combined', {"stream": logger.stream}));
 app.set('port', process.env.PORT || 3000);
-app.use('/static', express.static('public'));
 
 let passport = configurePassport();
 app.use(passport.initialize());
 
-// parse application/x-www-form-urlencoded
-// for easier testing with Postman or plain HTML forms
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use('/static', express.static('public'));
 
 app.use('/api/v1', graphqlHTTP({
     schema: schema,
@@ -34,8 +32,8 @@ app.get("/secret", passport.authenticate('jwt', {session: false}),
         res.json({message: "Success!"});
     });
 
-app.listen(app.get('port'));
-
-logger.info('Initialized');
+app.listen(app.get('port')).then(() => {
+    logger.info('Initialized');
+});
 
 export default app;
