@@ -20,12 +20,16 @@ app.use(bodyParser.json());
 
 app.use('/static', express.static('public'));
 
-app.use('/api/v1', graphqlHTTP({
-    schema: schema,
-    graphiql: true
-}));
+app.use('/api/v1', passport.authenticate('jwt', {session: false, failureRedirect: '/login'}),
+    graphqlHTTP({
+        schema: schema,
+        graphiql: true
+    }));
 
 app.post("/login", authenticateUser);
+app.get("/login", function (req, res) {
+    res.json({message: 'you are not logged in'})
+});
 
 app.get("/secret", passport.authenticate('jwt', {session: false}),
     function (req, res) {
