@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import * as config from "./config.json";
+import * as config from "../resources/config.json";
 import * as logger from "./logging"
 
 let dibitDB = new Sequelize(

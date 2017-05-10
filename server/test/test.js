@@ -2,7 +2,7 @@ import {describe, it} from "mocha";
 import {expect} from "chai";
 import request from "supertest";
 
-import dibsdb from "../database";
+import dibsdb from "../utils/database";
 import app from "../server";
 
 import * as Network from "../models/Network";
@@ -26,7 +26,8 @@ describe('gql schema', () => {
         await request(app)
             .post('/api/v1')
             .send({
-                query: `{
+                query: `
+{
   places {
     id
     tables {

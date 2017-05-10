@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import dibitDB from "../database";
+import dibitDB from "../utils/database";
 import {GraphQLObjectType} from "graphql";
 import {attributeFields} from "graphql-sequelize";
 

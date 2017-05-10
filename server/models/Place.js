@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import Sequelize from "sequelize";
-import dibitDB from "../database";
+import dibitDB from "../utils/database";
 import Table from "./Table";
 import {GraphQLList, GraphQLObjectType} from "graphql";
 import {attributeFields} from "graphql-sequelize";
