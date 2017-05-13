@@ -6,23 +6,17 @@ import Place from "../Place";
 
 let Model = dibitDB.define('user', {
     // System data
-    username: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-        unique: true,
-        allowNull: false,
-    },
-    passwordHash: Sequelize.STRING,
-    passwordSalt: Sequelize.STRING,
+    username: {type: Sequelize.STRING, primaryKey: true, unique: true, allowNull: false},
+    passwordHash: {type: Sequelize.STRING, allowNull: false},
     currentToken: Sequelize.STRING,
     tokenEol: Sequelize.DATE,
 
-    active: Sequelize.BOOLEAN,
+    active: {type: Sequelize.BOOLEAN, default: true},
 
     // Personal info
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING,
-    dateOfBirth: Sequelize.DATEONLY,
+    firstName: {type: Sequelize.STRING, allowNull: false},
+    lastName: {type: Sequelize.STRING, allowNull: false},
+    dateOfBirth: {type: Sequelize.DATEONLY, allowNull: false},
 });
 Place.Model.belongsTo(Model, {allowNull: false});
 
@@ -43,24 +37,16 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: networks => Promise.all(
-        networks.map(
-            nt => Model.findOrCreate({
-                where: {username: `test`},
+    test: () => Promise.all([
+            Model.findOrCreate({
+                where: {username: 'test'},
                 defaults: {
-                    networkName: nt.name,
                     passwordHash: 'test',
-                    passwordSalt: 'test',
-                    currentToken: null,
-                    tokenEol: null,
-
-                    active: true,
-
-                    // Personal info
                     firstName: 'Krzysztof',
                     lastName: 'Sczur',
                     dateOfBirth: '1994-09-26',
                 }
             }).spread((x, cre) => x)
-        ))
+        ]
+    )
 };

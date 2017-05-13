@@ -24,5 +24,7 @@ module.exports = {
                     name: `test table ${pl.id}, ${no}`,
                     placeId: pl.id
                 })
-            })))
+            })
+        )
+    )
 };

@@ -15,6 +15,7 @@
     "babel-plugin-source-map-support": "0.0.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "bcrypt": "^1.0.2",
     "body-parser": "1.x.x",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",

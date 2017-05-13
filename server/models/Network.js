@@ -13,7 +13,6 @@ let Model = dibitDB.define('network', {
     },
     description: Sequelize.TEXT,
 });
-User.Model.belongsTo(Model, {allowNull: false});
 
 let Type = new GraphQLObjectType({
     name: 'Network',

@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
-import passport from "passport";
 import * as passportJWT from "passport-jwt";
 import * as logger from "./logging";
 import * as _ from "lodash";
+import * as bcrypt from "bcrypt";
+
+import User from "../models/User/User";
 
 const users = [
     {
@@ -18,51 +20,42 @@ const users = [
 ];
 
 let jwtOptions = {
-    jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeader(),
-    secretOrKey: 'superSecretKey' // TODO
+    secret: 'superSecretKey' // TODO
 };
 
 module.exports = {
-    configurePassport: function () {
-        let strategy = new passportJWT.Strategy(
-            jwtOptions,
-            function checkToken(jwt_payload, next) {
-                logger.info('passport jwt - payload recived', jwt_payload);
-                next(null, users[0]);
-                // TODO database call
-                // let user = users[_.findIndex(users, {id: jwt_payload.id})];
-                // if (user) {
-                //     next(null, user);
-                // } else {
-                //     next(null, false);
-                // }
-            }
-        );
-
-        passport.use(strategy);
-
-        return passport
+    createUser: async function (userObject, unsafePassword) {
+        userObject.passwordHash = await bcrypt.hash(unsafePassword, 13);
+        let user = User.Model.build(userObject);
+        await user.save();
+        return user;
     },
-    createUser: function (username) {
-
-    },
-    authenticateUser: function (req, res) { // FIXME
-        const name = req.body.user;
-        const password = req.body.password;
-
-        // usually this would be a database call:
-        const user = _.find(users, {name: name});
-        if (!user) {
-            res.status(401).json({message: "no such user found"});
-        }
-
-        if (user.password === req.body.password) {
-            // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-            const payload = {id: user.id};
-            const token = jwt.sign(payload, jwtOptions.secretOrKey);
-            res.json({message: "ok", token: token});
+    generateToken: async function (username, unsafePassword) {
+        let user = await User.Model.findOne({where: {username: username}});
+        let passwordOk = await bcrypt.compare(unsafePassword, user.passwordHash);
+        if (passwordOk) {
+            let token = await jwt.sign(
+                {data: user.username},
+                jwtOptions.secret,
+                {expiresIn: '72h'}
+            );
+            user.currentToken = token;
+            await user.save();
+            return token;
         } else {
-            res.status(401).json({message: "passwords did not match"});
+            return false;
         }
+    },
+    verifyToken: async function (token) {
+        // let user = await User.Model.find({where: {username: username}});
+        try {
+            let info = await jwt.verify(token, jwtOptions.secret);
+            return info.data
+        } catch (e) {
+            return false
+        }
+    },
+    authorizeUser: async function () {
+        throw "Not implemented";
     }
 };
