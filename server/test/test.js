@@ -46,6 +46,7 @@ describe('authorisation', () => {
         expect(user.firstName).to.be.equal('Krzysztof');
         let token = await auth.generateToken('kszczur', 'testpass1');
         expect(token).to.have.length.above(15);
+        expect(token).to.have.length.above(15);
         let username = await auth.verifyToken(token);
         expect(username).to.be.equal('kszczur');
     });

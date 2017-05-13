@@ -32,22 +32,20 @@ module.exports = {
     },
     generateToken: async function (username, unsafePassword) {
         let user = await User.Model.findOne({where: {username: username}});
+        if (user === null) throw new Error(`No such user: ${username}`);
         let passwordOk = await bcrypt.compare(unsafePassword, user.passwordHash);
-        if (passwordOk) {
-            let token = await jwt.sign(
-                {data: user.username},
-                jwtOptions.secret,
-                {expiresIn: '72h'}
-            );
-            user.currentToken = token;
-            await user.save();
-            return token;
-        } else {
-            return false;
-        }
+        if (!passwordOk) throw new Error("Wrong password");
+
+        let token = await jwt.sign(
+            {data: user.username},
+            jwtOptions.secret,
+            {expiresIn: '72h'}
+        );
+        user.currentToken = token;
+        await user.save();
+        return token;
     },
     verifyToken: async function (token) {
-        // let user = await User.Model.find({where: {username: username}});
         try {
             let info = await jwt.verify(token, jwtOptions.secret);
             return info.data
@@ -56,6 +54,6 @@ module.exports = {
         }
     },
     authorizeUser: async function () {
-        throw "Not implemented";
+        throw new Error("Not implemented");
     }
 };

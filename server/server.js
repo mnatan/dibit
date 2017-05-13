@@ -14,16 +14,8 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
 app.use('/static', express.static('public'));
-
-app.use('/api/v1',
-    // passport.authenticate('jwt', {session: false, failureRedirect: '/login'}),
-    graphqlHTTP({
-        schema: schema,
-        graphiql: true
-    })
-);
+app.use('/api/v1', graphqlHTTP({schema: schema, graphiql: true}));
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/../frontend/index.html'));

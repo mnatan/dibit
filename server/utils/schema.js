@@ -1,8 +1,8 @@
 import {getSchema} from "graphql-sequelize-crud";
 import {resolver} from "graphql-sequelize";
-import {GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString} from "graphql";
+import {GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLNonNull} from "graphql";
 import User from "../models/User/User";
-import {generateToken} from "./auth";
+import * as auth from "./auth";
 
 exports.schema = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -11,9 +11,7 @@ exports.schema = new GraphQLSchema({
             users: {
                 type: new GraphQLList(User.Type),
                 args: {
-                    username: {
-                        name: 'username', type: GraphQLString
-                    }
+                    username: {type: GraphQLString}
                 },
                 resolve: resolver(User.Model)
             }
@@ -22,10 +20,14 @@ exports.schema = new GraphQLSchema({
     mutation: new GraphQLObjectType({
         name: 'RootMutationType',
         fields: {
-            generateToken: {
+            login: {
                 type: GraphQLString,
                 description: 'Used to authenticate the user',
-                resolve: generateToken,
+                args: {
+                    username: {type: new GraphQLNonNull(GraphQLString)},
+                    password: {type: new GraphQLNonNull(GraphQLString)},
+                },
+                resolve: (obj, args, ctx) => auth.generateToken(args.username, args.password),
             }
         }
     })
