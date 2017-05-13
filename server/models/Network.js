@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import dibitDB from "../utils/database";
 import {attributeFields} from "graphql-sequelize";
 import {GraphQLObjectType} from "graphql";
-import Place from "./Place";
+import User from "./User/User";
 
 let Model = dibitDB.define('network', {
     name: {
@@ -13,7 +13,7 @@ let Model = dibitDB.define('network', {
     },
     description: Sequelize.TEXT,
 });
-Place.Model.belongsTo(Model, {allowNull: false});
+User.Model.belongsTo(Model, {allowNull: false});
 
 let Type = new GraphQLObjectType({
     name: 'Network',

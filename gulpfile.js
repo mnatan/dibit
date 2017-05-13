@@ -22,7 +22,9 @@ gulp.task('copy-schemas', () => {
 
 gulp.task('build', ['babel-server', 'copy-schemas']);
 gulp.task('build-watch', () => {
-    watch('server/**/*', {ignoreInitial: false}, () => {
-        gulp.start('build')
+    gulp.start('build');
+    watch(['./server/**/*.js', '!./server/dist/**/*.js'], (vin) => {
+        console.log('changed file: ', vin.path);
+        gulp.start('build');
     })
 });

@@ -26,21 +26,25 @@ module.exports = {
     configurePassport: function () {
         let strategy = new passportJWT.Strategy(
             jwtOptions,
-            function (jwt_payload, next) {
+            function checkToken(jwt_payload, next) {
                 logger.info('passport jwt - payload recived', jwt_payload);
-                // usually this would be a database call:
-                let user = users[_.findIndex(users, {id: jwt_payload.id})];
-                if (user) {
-                    next(null, user);
-                } else {
-                    next(null, false);
-                }
+                next(null, users[0]);
+                // TODO database call
+                // let user = users[_.findIndex(users, {id: jwt_payload.id})];
+                // if (user) {
+                //     next(null, user);
+                // } else {
+                //     next(null, false);
+                // }
             }
         );
 
         passport.use(strategy);
 
         return passport
+    },
+    createUser: function (username) {
+
     },
     authenticateUser: function (req, res) { // FIXME
         const name = req.body.user;
