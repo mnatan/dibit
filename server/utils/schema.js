@@ -10,6 +10,11 @@ exports.schema = new GraphQLSchema({
         fields: {
             users: {
                 type: new GraphQLList(User.Type),
+                args: {
+                    username: {
+                        name: 'username', type: GraphQLString
+                    }
+                },
                 resolve: resolver(User.Model)
             }
         }

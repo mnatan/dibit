@@ -28,13 +28,13 @@ let Type = new GraphQLObjectType({
 module.exports = {
     Model,
     Type,
-    test: networks => Promise.all(
-        networks.map(nt => Promise.all(
+    test: users => Promise.all(
+        users.map(user => Promise.all(
             [1, 2].map(no =>
                 Model.create({
                     name: `test place ${no}`,
                     description: 'place for test purposes',
-                    networkName: nt.name
+                    userUsername: user.username
                 })
             )))).then(_.flatten)
 };

@@ -21,16 +21,17 @@ app.use(bodyParser.json());
 
 app.use('/static', express.static('public'));
 
-app.use('/api/v1', passport.authenticate('jwt', {session: false, failureRedirect: '/login'}),
+app.use('/api/v1',
+    // passport.authenticate('jwt', {session: false, failureRedirect: '/login'}),
     graphqlHTTP({
         schema: schema,
         graphiql: true
-    }));
+    })
+);
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/../frontend/index.html'));
 });
-
 
 app.post("/login", authenticateUser);
 app.get("/login", function (req, res) {

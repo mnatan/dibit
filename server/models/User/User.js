@@ -17,7 +17,6 @@ let Model = dibitDB.define('user', {
     currentToken: Sequelize.STRING,
     tokenEol: Sequelize.DATE,
 
-    registrationTime: Sequelize.DATE,
     active: Sequelize.BOOLEAN,
 
     // Personal info
@@ -35,7 +34,7 @@ let Type = new GraphQLObjectType({
         places: {
             type: new GraphQLList(Place.Type),
             resolve: user => Place.Model
-                .findAll({where: {userId: user.id}})
+                .findAll({where: {userUsername: user.username}})
                 .then(place => place.map(x => x.get()))
         }
     }
@@ -43,5 +42,25 @@ let Type = new GraphQLObjectType({
 
 module.exports = {
     Model,
-    Type
+    Type,
+    test: networks => Promise.all(
+        networks.map(
+            nt => Model.findOrCreate({
+                where: {username: `test`},
+                defaults: {
+                    networkName: nt.name,
+                    passwordHash: 'test',
+                    passwordSalt: 'test',
+                    currentToken: null,
+                    tokenEol: null,
+
+                    active: true,
+
+                    // Personal info
+                    firstName: 'Krzysztof',
+                    lastName: 'Sczur',
+                    dateOfBirth: '1994-09-26',
+                }
+            }).spread((x, cre) => x)
+        ))
 };

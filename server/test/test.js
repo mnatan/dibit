@@ -8,11 +8,13 @@ import app from "../server";
 import * as Network from "../models/Network";
 import * as Place from "../models/Place";
 import * as Table from "../models/Table";
+import * as User from "../models/User/User";
 
 async function populate_db() {
     await dibsdb
         .sync({force: true})
         .then(Network.test)
+        .then(User.test)
         .then(Place.test)
         .then(Table.test)
 }
