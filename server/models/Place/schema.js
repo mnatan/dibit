@@ -1,6 +1,7 @@
 import {GraphQLList, GraphQLObjectType} from "graphql";
 import {attributeFields} from "graphql-sequelize";
 import TableType from "../Table/schema";
+import Table from "../Table/model";
 import Place from "./model";
 
 module.exports = new GraphQLObjectType({
@@ -10,7 +11,7 @@ module.exports = new GraphQLObjectType({
         ...attributeFields(Place),
         tables: {
             type: new GraphQLList(TableType),
-            resolve: place => Table.Model
+            resolve: place => Table
                 .findAll({where: {placeId: place.id}})
                 .then(tbl => tbl.map(tb => tb.get()))
         }

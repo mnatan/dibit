@@ -42,6 +42,7 @@ describe('authorisation', () => {
             firstName: 'Krzysztof',
             lastName: 'Sczur',
             dateOfBirth: '1994-09-26',
+            networkName: 'test'
         }, 'testpass1');
         expect(user.firstName).to.be.equal('Krzysztof');
         let token = await auth.generateToken('kszczur', 'testpass1');

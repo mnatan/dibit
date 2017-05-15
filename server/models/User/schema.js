@@ -20,8 +20,8 @@ module.exports = new GraphQLObjectType({
         network: {
             type: NetworkType,
             resolve: user => Network
-                .findOne({where: {name: user.username}})
-                .then(place => place.map(x => x.get()))
+                .findOne({where: {name: user.networkName}})
+                .then(x => x.get())
         }
     }
 });
