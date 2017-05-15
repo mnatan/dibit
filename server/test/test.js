@@ -10,7 +10,7 @@ import * as auth from '../utils/auth';
 import * as Network from "../models/Network";
 import * as Place from "../models/Place";
 import * as Table from "../models/Table";
-import * as User from "../models/User/User";
+import * as User from "../models/User";
 
 async function populate_db() {
     await dibsdb
@@ -45,7 +45,6 @@ describe('authorisation', () => {
         }, 'testpass1');
         expect(user.firstName).to.be.equal('Krzysztof');
         let token = await auth.generateToken('kszczur', 'testpass1');
-        expect(token).to.have.length.above(15);
         expect(token).to.have.length.above(15);
         let username = await auth.verifyToken(token);
         expect(username).to.be.equal('kszczur');

@@ -1,7 +1,7 @@
 import {getSchema} from "graphql-sequelize-crud";
 import {resolver} from "graphql-sequelize";
 import {GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLNonNull} from "graphql";
-import User from "../models/User/User";
+import User from "../models/User";
 import * as auth from "./auth";
 
 exports.schema = new GraphQLSchema({

@@ -2,17 +2,13 @@ import Sequelize from "sequelize";
 import dibitDB from "../utils/database";
 import {attributeFields} from "graphql-sequelize";
 import {GraphQLObjectType} from "graphql";
-import User from "./User/User";
+import User from "./User";
 
 let Model = dibitDB.define('network', {
-    name: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-        unique: true,
-        allowNull: false,
-    },
+    name: {type: Sequelize.STRING, primaryKey: true, unique: true, allowNull: false,},
     description: Sequelize.TEXT,
 });
+User.Model.belongsTo(Model, {allowNull: false});
 
 let Type = new GraphQLObjectType({
     name: 'Network',

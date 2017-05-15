@@ -4,7 +4,7 @@ import * as logger from "./logging";
 import * as _ from "lodash";
 import * as bcrypt from "bcrypt";
 
-import User from "../models/User/User";
+import User from "../models/User";
 
 const users = [
     {

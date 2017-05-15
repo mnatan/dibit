@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
-import dibitDB from "../../utils/database";
+import dibitDB from "../utils/database";
 import {attributeFields} from "graphql-sequelize";
-import {GraphQLList, GraphQLObjectType} from "graphql";
-import Place from "../Place";
+import {GraphQLList, GraphQLObjectType, GraphQLString} from "graphql";
+import Place from "./Place";
 
 let Model = dibitDB.define('user', {
     // System data
@@ -29,6 +29,12 @@ let Type = new GraphQLObjectType({
             type: new GraphQLList(Place.Type),
             resolve: user => Place.Model
                 .findAll({where: {userUsername: user.username}})
+                .then(place => place.map(x => x.get()))
+        },
+        network: {
+            type: GraphQLString,
+            resolve: user => Model
+                .findOne({where: {userUsername: user.username}})
                 .then(place => place.map(x => x.get()))
         }
     }
