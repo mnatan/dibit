@@ -5,20 +5,20 @@ import {expect} from "chai";
 import dibsdb from "../utils/database";
 // import app from "../server";
 
-import * as auth from '../utils/auth';
+import auth from '../utils/auth';
 
-import * as Network from "../models/Network";
-import * as Place from "../models/Place";
-import * as Table from "../models/Table";
-import * as User from "../models/User";
+import NetworkPopulate from "../models/Network/test";
+import UserPopulate from "../models/User/test";
+import PlacePopulate from "../models/Place/test";
+import TablePopulate from "../models/Table/test";
 
 async function populate_db() {
     await dibsdb
         .sync({force: true})
-        .then(Network.test)
-        .then(User.test)
-        .then(Place.test)
-        .then(Table.test)
+        .then(NetworkPopulate)
+        .then(UserPopulate)
+        .then(PlacePopulate)
+        .then(TablePopulate)
 }
 
 let transaction = null;
