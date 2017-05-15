@@ -1,6 +1,6 @@
 import User from "./definition"
-import Place from "../Place/definition"
+import Network from "../Network/definition"
 
-Place.belongsTo(User, {allowNull: false});
+User.belongsTo(Network, {allowNull: false});
 
 module.exports = User;

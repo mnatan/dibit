@@ -1,6 +1,6 @@
-import Table from "../Table/definition";
+import User from "../User/definition"
 import Place from "./definition"
 
-Table.belongsTo(Place, {allowNull: false});
+Place.belongsTo(User, {allowNull: false});
 
 module.exports = Place;

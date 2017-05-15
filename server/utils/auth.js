@@ -1,23 +1,9 @@
 import jwt from "jsonwebtoken";
-import * as passportJWT from "passport-jwt";
 import * as logger from "./logging";
 import * as _ from "lodash";
 import * as bcrypt from "bcrypt";
 
 import User from "../models/User/model";
-
-const users = [
-    {
-        id: 1,
-        name: 'mnatan',
-        password: 'test'
-    },
-    {
-        id: 2,
-        name: 'admin',
-        password: 'password'
-    }
-];
 
 let jwtOptions = {
     secret: 'superSecretKey' // TODO
@@ -53,7 +39,7 @@ module.exports = {
             return false
         }
     },
-    authorizeUser: async function () {
+    authorizeUser: async function (permList) {
         throw new Error("Not implemented");
     }
 };

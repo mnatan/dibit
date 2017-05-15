@@ -1,3 +1,6 @@
-import def from "./definition"
+import Table from "./definition"
+import Place from "../Place/definition"
 
-module.exports = def;
+Table.belongsTo(Place, {allowNull: false});
+
+module.exports = Table;
