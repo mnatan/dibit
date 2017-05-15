@@ -6,7 +6,6 @@ import graphqlHTTP from "express-graphql";
 import {schema} from "./utils/schema";
 import * as logger from "./utils/logging";
 
-
 const app = express();
 
 app.use(morgan('combined', {"stream": logger.stream}));
